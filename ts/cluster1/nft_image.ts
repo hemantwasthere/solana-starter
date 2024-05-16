@@ -28,10 +28,10 @@ umi.use(signerIdentity(signer));
     //2. Convert image to generic file.
     //3. Upload image
 
-    const image = await readFile("../generug.png");
+    const image = await readFile("./megane.jpg");
 
     const img_gen = createGenericFile(image, "dreaded_rug", {
-      contentType: "image/png",
+      contentType: "image/jpg",
     });
 
     // const [myUri] = irysUploader().upload([img_gen]);

@@ -28,10 +28,10 @@ umi.use(signerIdentity(signer));
     // https://docs.metaplex.com/programs/token-metadata/changelog/v1.0#json-structure
 
     const image =
-      "https://arweave.net/xigMavqVMOGCdaoFoRvBHUJeNkac6rEfbqd_IXD8xOo";
+      "https://arweave.net/PgM8Pf9rKUD8H4QlOBmpvoHt76IHtIRboutsf3llQgk";
     const metadata = {
       name: "Dread",
-      symbol: "dread",
+      symbol: "DRD",
       description: "dread's rug",
       image: image,
       attributes: [{ trait_type: "Rectangular", value: "?" }],

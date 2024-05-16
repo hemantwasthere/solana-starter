@@ -29,9 +29,9 @@ const mint = generateSigner(umi);
 (async () => {
   let tx = createNft(umi, {
     mint,
-    name: "dread nft",
+    name: "dreaded guy",
     symbol: "DRD",
-    uri: "https://arweave.net/1ZECjzMKfj_PHDvlESzIfuQeTMxm5-YvvQE-ANJAP18",
+    uri: "https://arweave.net/bYwUgZ_kNIea7GqKvM6jhOqIXCx3Up0sDrWcN93h5ww",
     sellerFeeBasisPoints: percentAmount(0.1),
   });
 
