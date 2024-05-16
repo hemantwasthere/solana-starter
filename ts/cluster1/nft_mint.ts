@@ -1,26 +1,46 @@
-import { createUmi } from "@metaplex-foundation/umi-bundle-defaults"
-import { createSignerFromKeypair, signerIdentity, generateSigner, percentAmount } from "@metaplex-foundation/umi"
-import { createNft, mplTokenMetadata } from "@metaplex-foundation/mpl-token-metadata";
-
-import wallet from "../wba-wallet.json"
+import {
+  createNft,
+  mplTokenMetadata,
+} from "@metaplex-foundation/mpl-token-metadata";
+import {
+  createSignerFromKeypair,
+  generateSigner,
+  percentAmount,
+  signerIdentity,
+} from "@metaplex-foundation/umi";
+import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
 import base58 from "bs58";
+
+import wallet from "../wba-wallet.json";
 
 const RPC_ENDPOINT = "https://api.devnet.solana.com";
 const umi = createUmi(RPC_ENDPOINT);
+const walletbase58 = base58.decode(wallet);
 
-let keypair = umi.eddsa.createKeypairFromSecretKey(new Uint8Array(wallet));
+let keypair = umi.eddsa.createKeypairFromSecretKey(
+  new Uint8Array(walletbase58)
+);
 const myKeypairSigner = createSignerFromKeypair(umi, keypair);
 umi.use(signerIdentity(myKeypairSigner));
-umi.use(mplTokenMetadata())
+umi.use(mplTokenMetadata());
 
 const mint = generateSigner(umi);
 
 (async () => {
-    // let tx = ???
-    // let result = await tx.sendAndConfirm(umi);
-    // const signature = base58.encode(result.signature);
-    
-    // console.log(`Succesfully Minted! Check out your TX here:\nhttps://explorer.solana.com/tx/${signature}?cluster=devnet`)
+  let tx = createNft(umi, {
+    mint,
+    name: "dread nft",
+    symbol: "DRD",
+    uri: "https://arweave.net/1ZECjzMKfj_PHDvlESzIfuQeTMxm5-YvvQE-ANJAP18",
+    sellerFeeBasisPoints: percentAmount(0.1),
+  });
 
-    console.log("Mint Address: ", mint.publicKey);
+  let result = await tx.sendAndConfirm(umi);
+  const signature = base58.encode(result.signature);
+
+  console.log(
+    `Succesfully Minted! Check out your TX here:\nhttps://explorer.solana.com/tx/${signature}?cluster=devnet`
+  );
+
+  console.log("Mint Address: ", mint.publicKey);
 })();
